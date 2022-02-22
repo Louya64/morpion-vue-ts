@@ -1,5 +1,5 @@
 <template>
-	<div class="cell" @click.once="displayImg">
+	<div class="cell" @click="displayImg">
 		<h2>cell {{ id }}</h2>
 		<img class="invisible" ref="img" :src="imgUrl" alt="alt" />
 	</div>
@@ -19,31 +19,48 @@ export default defineComponent({
 			type: Number,
 			required: true,
 		},
+		isStarted: {
+			type: Boolean,
+			required: true,
+		},
 	},
 	data() {
 		return {
 			imgUrl: "src/assets/circle.svg",
+			filled: false,
 		};
 	},
 	$refs: {
-		img: HTMLImageElement,
+		img: HTMLElement,
+	},
+	watch: {
+		isStarted(newVal) {
+			if (newVal === true) {
+				const img: HTMLElement = this.$refs.img as HTMLElement;
+				img.classList.add("invisible");
+				this.filled = false;
+			}
+		},
 	},
 	methods: {
 		displayImg() {
-			if (this.playerPlaying === 1) {
-				this.imgUrl = "src/assets/cross.svg";
-			} else {
-				this.imgUrl = "src/assets/circle.svg";
+			if (!this.filled) {
+				if (this.playerPlaying === 1) {
+					this.imgUrl = "src/assets/cross.svg";
+				} else {
+					this.imgUrl = "src/assets/circle.svg";
+				}
+				const img: HTMLElement = this.$refs.img as HTMLElement;
+				img.classList.remove("invisible");
+				this.filled = true;
+				this.$emit("updateGame", { id: this.id, img: this.imgUrl });
 			}
-			const img: HTMLImageElement = this.$refs.img as HTMLImageElement; // ??????????????????????????????????
-			console.log(this.id, this.imgUrl);
-			img.classList.remove("invisible");
 		},
 	},
 });
 </script>
 
-<style>
+<style scoped>
 .cell {
 	margin: 0;
 	width: 10vw;

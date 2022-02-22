@@ -4,6 +4,9 @@
 		<div v-if="isStarted">
 			<p>Tour du joueur {{ playerPlaying }}</p>
 		</div>
+		<div v-else-if="!isStarted && winner !== 0">
+			Gagnant: joueur {{ winner }}
+		</div>
 		<div>
 			<p>score joueur 1 : {{ score1 }} points</p>
 			<p>score joueur 2 : {{ score2 }} points</p>
@@ -23,12 +26,26 @@ export default defineComponent({
 			type: Number,
 			required: true,
 		},
+		winner: {
+			type: Number,
+			required: true,
+		},
 	},
 	data() {
 		return {
 			score1: 0,
 			score2: 0,
 		};
+	},
+	watch: {
+		winner(newVal) {
+			if (newVal === 1) {
+				this.score1++;
+			}
+			if (newVal === 2) {
+				this.score2++;
+			}
+		},
 	},
 	methods: {
 		start() {
@@ -38,7 +55,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .infos {
 	width: 20vw;
 	border: 2px solid black;
