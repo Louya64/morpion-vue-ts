@@ -1,31 +1,48 @@
 <template>
-	<h1>titre</h1>
+	<h1>Morpion</h1>
 	<div class="wrapper">
 		<div class="text">
-			<!-- component infos -->
-			<Text />
-			<!-- <button>Jouer</button>
-			<p>Tour de : {{ playerPlaying }}</p>
-			<p>score j1, j2</p> -->
+			<Infos
+				@start="startGame"
+				:isStarted="isStarted"
+				:playerPlaying="playerPlaying"
+			/>
 		</div>
-		<div class="grid">
-			<Grid />
-			<!-- component grille de jeu -->
-		</div>
+		<Grid
+			@togglePlayer="togglePlayer"
+			@end="endGame"
+			:playerPlaying="playerPlaying"
+		/>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Text from "./components/text.vue";
+import Infos from "./components/Infos.vue";
 import Grid from "./components/Grid.vue";
 export default defineComponent({
 	data() {
 		return {
+			isStarted: false,
 			playerPlaying: 1,
 		};
 	},
-	components: { Text, Grid },
+	components: { Infos, Grid },
+	methods: {
+		startGame() {
+			this.isStarted = true;
+		},
+		togglePlayer() {
+			if (this.playerPlaying === 1) {
+				this.playerPlaying = 2;
+			} else {
+				this.playerPlaying = 1;
+			}
+		},
+		endGame() {
+			this.isStarted = false;
+		},
+	},
 });
 </script>
 
@@ -43,10 +60,5 @@ export default defineComponent({
 	display: flex;
 	margin: auto;
 	justify-content: space-evenly;
-}
-.text,
-.grid {
-	width: 30vw;
-	border: 2px solid black;
 }
 </style>
