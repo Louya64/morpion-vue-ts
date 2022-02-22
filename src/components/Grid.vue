@@ -8,7 +8,6 @@
 			:id="cellUnit"
 			:isStarted="isStarted"
 			:playerPlaying="playerPlaying"
-			ref="cell"
 		/>
 	</div>
 </template>
@@ -37,7 +36,6 @@ export default defineComponent({
 	data() {
 		return {
 			gridSize: 9,
-			clicked: false,
 			gridContent: [] as string[],
 			wins: [
 				[1, 2, 3],

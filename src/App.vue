@@ -60,7 +60,7 @@ export default defineComponent({
 			}
 			this.lapsRemaining--;
 		},
-		endGame(winner = 0) {
+		endGame(winner: number = 0) {
 			this.winner = winner;
 			this.isStarted = false;
 		},
