@@ -7,6 +7,7 @@
 		<div v-else-if="!isStarted && winner !== 0">
 			Gagnant: joueur {{ winner }}
 		</div>
+		<div v-if="lost">Perdu</div>
 		<div>
 			<p>score joueur 1 : {{ score1 }} points</p>
 			<p>score joueur 2 : {{ score2 }} points</p>
@@ -30,6 +31,10 @@ export default defineComponent({
 			type: Number,
 			required: true,
 		},
+		lost: {
+			type: Boolean,
+			required: true,
+		},
 	},
 	data() {
 		return {
@@ -38,7 +43,7 @@ export default defineComponent({
 		};
 	},
 	watch: {
-		winner(newVal) {
+		winner(newVal: number) {
 			if (newVal === 1) {
 				this.score1++;
 			}

@@ -33,6 +33,7 @@ export default defineComponent({
 			required: true,
 		},
 	},
+	emits: ["end", "updateGame"],
 	data() {
 		return {
 			gridSize: 9,
@@ -53,7 +54,7 @@ export default defineComponent({
 	},
 	components: { Cell },
 	watch: {
-		isStarted(newVal) {
+		isStarted(newVal: boolean) {
 			if (newVal === true) {
 				this.gridContent = [];
 			}

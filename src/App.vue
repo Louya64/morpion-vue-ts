@@ -7,13 +7,13 @@
 				:isStarted="isStarted"
 				:playerPlaying="playerPlaying"
 				:winner="winner"
+				:lost="lost"
 			/>
 		</div>
 		<Grid
 			@updateGame="updateGame"
 			@end="endGame"
 			:isStarted="isStarted"
-			:lapsRemaining="lapsRemaining"
 			:playerPlaying="playerPlaying"
 		/>
 	</div>
@@ -30,12 +30,16 @@ export default defineComponent({
 			playerPlaying: 1,
 			lapsRemaining: 9,
 			winner: 0,
+			lost: false,
 		};
 	},
 	components: { Infos, Grid },
 	watch: {
-		lapsRemaining(newValue) {
+		lapsRemaining(newValue: number) {
 			if (newValue === 0) {
+				if (this.winner === 0) {
+					this.lost = true;
+				}
 				this.endGame();
 			}
 		},
@@ -43,6 +47,7 @@ export default defineComponent({
 	methods: {
 		startGame() {
 			this.winner = 0;
+			this.lost = false;
 			this.playerPlaying = 1;
 			this.lapsRemaining = 9;
 			this.isStarted = true;

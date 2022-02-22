@@ -7,7 +7,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import "../assets/circle.svg";
 
 export default defineComponent({
 	props: {
@@ -26,7 +25,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			imgUrl: "src/assets/circle.svg",
+			imgUrl: "",
 			filled: false,
 		};
 	},
@@ -34,7 +33,7 @@ export default defineComponent({
 		img: HTMLElement,
 	},
 	watch: {
-		isStarted(newVal) {
+		isStarted(newVal: boolean) {
 			if (newVal === true) {
 				const img: HTMLElement = this.$refs.img as HTMLElement;
 				img.classList.add("invisible");
